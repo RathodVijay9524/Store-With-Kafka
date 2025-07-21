@@ -1,8 +1,10 @@
 package in.vijay.event;
 
 
-import in.vijay.beans.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserUpdatedEvent {
+public class UserCreatedEvent {
     private Long id;
     private String username;
     private String email;
@@ -19,6 +21,6 @@ public class UserUpdatedEvent {
     private String phoneNumber;
     private Role role;
     private boolean isActive;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 }
 

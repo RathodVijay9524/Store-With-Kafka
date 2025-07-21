@@ -1,6 +1,6 @@
 package in.vijay.dto;
 
-import in.vijay.beans.Role;
+import in.vijay.event.Role;
 import lombok.*;
 
 import java.time.LocalDateTime;

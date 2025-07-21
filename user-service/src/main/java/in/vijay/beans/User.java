@@ -1,5 +1,6 @@
 package in.vijay.beans;
 
+import in.vijay.event.Role;
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

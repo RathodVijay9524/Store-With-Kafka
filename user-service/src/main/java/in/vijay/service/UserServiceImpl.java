@@ -3,15 +3,11 @@ package in.vijay.service;
 import in.vijay.beans.User;
 import in.vijay.dto.UserRequest;
 import in.vijay.dto.UserResponse;
-import in.vijay.event.UserCreatedEvent;
-import in.vijay.event.UserDeletedEvent;
-import in.vijay.event.UserEventPublisher;
-import in.vijay.event.UserUpdatedEvent;
+import in.vijay.event.*;
 import in.vijay.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,6 +31,7 @@ public class UserServiceImpl implements UserService{
 
         User user = new User();
         BeanUtils.copyProperties(request, user);
+        user.setRole(user.getRole() != null ? user.getRole() : Role.USER);
         user.setActive(true);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
