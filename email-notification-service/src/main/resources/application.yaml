@@ -1,0 +1,36 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: EmailService
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: email-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: omvijay44@gmail.com         # ✅ Replace with your Gmail address
+    password: bqqf htvl xebe kkua            # ✅ Replace with your Gmail App Password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
