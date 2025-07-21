@@ -24,4 +24,12 @@ public class UserEventPublisher {
 
         kafkaTemplate.send("user-updated", event);
     }
+
+    public void publishPasswordChangedEvent(PasswordChangedEvent event) {
+        kafkaTemplate.send("password-changed", event);
+    }
+
+    public void publishAccountUnlockedEvent(AccountUnlockedEvent event) {
+        kafkaTemplate.send("account-unlocked", event);
+    }
 }

@@ -31,6 +31,16 @@ public class AuditEventListener {
         saveAudit("USER_DELETED", String.valueOf(event.getId()), event.toString(), event.getEmail());
     }
 
+    @KafkaListener(topics = "password-changed", groupId = "audit-group")
+    public void onPasswordChanged(PasswordChangedEvent event) {
+        saveAudit("PASSWORD_CHANGED", String.valueOf(event.getUserId()), event.toString(),event.getEmail());
+    }
+
+    @KafkaListener(topics = "account-unlocked", groupId = "audit-group")
+    public void onAccountUnlocked(AccountUnlockedEvent event) {
+        saveAudit("ACCOUNT_UNLOCKED", String.valueOf(event.getUserId()), event.toString(), event.getEmail());
+    }
+
     private void saveAudit(String action, String userId, String details,String email) {
         AuditLog auditLog  = AuditLog.builder()
                 .action(action)
