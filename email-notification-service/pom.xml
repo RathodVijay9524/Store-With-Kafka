@@ -49,8 +49,8 @@
         </dependency>
 
         <dependency>
-            <groupId>in.vijay</groupId>
-            <artifactId>comment-service</artifactId>
+            <groupId>com.ms</groupId>
+            <artifactId>common-id-generator</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

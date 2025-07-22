@@ -1,5 +1,6 @@
 package in.vijay.event;
 
+import com.ms.event.user.*;
 import in.vijay.beans.AuditLog;
 import in.vijay.repository.AuditLogRepository;
 import lombok.RequiredArgsConstructor;

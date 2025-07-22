@@ -1,8 +1,12 @@
 package in.vijay.service;
 
+import com.ms.dto.user.Role;
+import com.ms.dto.user.UserRequest;
+import com.ms.dto.user.UserResponse;
+import com.ms.event.user.UserCreatedEvent;
+import com.ms.event.user.UserDeletedEvent;
+import com.ms.event.user.UserUpdatedEvent;
 import in.vijay.beans.User;
-import in.vijay.dto.UserRequest;
-import in.vijay.dto.UserResponse;
 import in.vijay.event.*;
 import in.vijay.repository.UserRepository;
 import lombok.AllArgsConstructor;

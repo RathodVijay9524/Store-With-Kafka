@@ -1,7 +1,7 @@
 package in.vijay.controller;
 
-import in.vijay.dto.UserRequest;
-import in.vijay.dto.UserResponse;
+import com.ms.dto.user.UserRequest;
+import com.ms.dto.user.UserResponse;
 import in.vijay.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

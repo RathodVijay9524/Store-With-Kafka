@@ -41,10 +41,15 @@
 
 		<dependency>
 			<groupId>in.vijay</groupId>
-			<artifactId>comment-service</artifactId>
+			<artifactId>common-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.ms</groupId>
+			<artifactId>common-id-generator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- Kafka (optional based on messaging) -->
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>

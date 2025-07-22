@@ -1,8 +1,8 @@
 package in.vijay.service;
 
 
-import in.vijay.dto.UserRequest;
-import in.vijay.dto.UserResponse;
+import com.ms.dto.user.UserRequest;
+import com.ms.dto.user.UserResponse;
 
 import java.util.List;
 
@@ -14,6 +14,9 @@ public interface UserService {
     void deleteUser(Long id);
     UserResponse getUserById(Long id);
     List<UserResponse> getAllUsers();
+
+
+
     /*User createUser(User user);
     Optional<User> getUserById(Long id);
     List<User> getAllUsers();
