@@ -1,7 +1,7 @@
 package in.vijay.category_service.service;
 
-import com.ms.dto.category.CategoryRequestDTO;
-import com.ms.dto.category.CategoryResponseDTO;
+import in.vijay.dto.category.CategoryRequestDTO;
+import in.vijay.dto.category.CategoryResponseDTO;
 import in.vijay.category_service.beans.Category;
 import in.vijay.category_service.event.CategoryEventPublisher;
 import in.vijay.category_service.repository.CategoryRepository;

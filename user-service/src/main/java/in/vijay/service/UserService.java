@@ -1,8 +1,8 @@
 package in.vijay.service;
 
 
-import com.ms.dto.user.UserRequest;
-import com.ms.dto.user.UserResponse;
+import in.vijay.dto.user.UserRequest;
+import in.vijay.dto.user.UserResponse;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import java.util.List;
 public interface UserService {
 
     UserResponse createUser(UserRequest request);
-    UserResponse updateUser(Long id, UserRequest request);
-    void deleteUser(Long id);
-    UserResponse getUserById(Long id);
+    UserResponse updateUser(String id, UserRequest request);
+    void deleteUser(String id);
+    UserResponse getUserById(String id);
     List<UserResponse> getAllUsers();
 
 

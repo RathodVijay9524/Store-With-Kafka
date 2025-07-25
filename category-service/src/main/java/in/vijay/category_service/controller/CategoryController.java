@@ -1,7 +1,7 @@
 package in.vijay.category_service.controller;
 
-import com.ms.dto.category.CategoryRequestDTO;
-import com.ms.dto.category.CategoryResponseDTO;
+import in.vijay.dto.category.CategoryRequestDTO;
+import in.vijay.dto.category.CategoryResponseDTO;
 import in.vijay.category_service.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

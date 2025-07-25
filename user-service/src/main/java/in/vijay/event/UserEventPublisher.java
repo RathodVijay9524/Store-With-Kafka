@@ -1,6 +1,6 @@
 package in.vijay.event;
 
-import com.ms.event.user.*;
+import in.vijay.event.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

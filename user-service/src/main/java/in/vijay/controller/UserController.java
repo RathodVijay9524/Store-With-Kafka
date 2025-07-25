@@ -1,7 +1,7 @@
 package in.vijay.controller;
 
-import com.ms.dto.user.UserRequest;
-import com.ms.dto.user.UserResponse;
+import in.vijay.dto.user.UserRequest;
+import in.vijay.dto.user.UserResponse;
 import in.vijay.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class UserController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestBody UserRequest request) {
         log.info("✏️ [PUT] Update User ID: {}", id);
         UserResponse response = userService.updateUser(id, request);
@@ -48,7 +48,7 @@ public class UserController {
      * DELETE /api/users/{id}
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         log.info("🗑️ [DELETE] User ID: {}", id);
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
@@ -59,7 +59,7 @@ public class UserController {
      * GET /api/users/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
         log.info("🔍 [GET] User by ID: {}", id);
         UserResponse response = userService.getUserById(id);
         return ResponseEntity.ok(response);

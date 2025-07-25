@@ -1,7 +1,7 @@
 package in.vijay.event;
 
 
-import com.ms.event.user.UserCreatedEvent;
+import in.vijay.event.user.UserCreatedEvent;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import in.vijay.config.TwilioProperties;

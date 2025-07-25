@@ -1,9 +1,9 @@
 package in.vijay.category_service.event;
 
 
-import com.ms.event.category.CategoryCreatedEvent;
-import com.ms.event.category.CategoryDeletedEvent;
-import com.ms.event.category.CategoryUpdatedEvent;
+import in.vijay.event.category.CategoryCreatedEvent;
+import in.vijay.event.category.CategoryDeletedEvent;
+import in.vijay.event.category.CategoryUpdatedEvent;
 import in.vijay.category_service.beans.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

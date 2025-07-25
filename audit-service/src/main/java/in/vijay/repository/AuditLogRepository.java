@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AuditLogRepository extends JpaRepository<AuditLog,Long> {
+public interface AuditLogRepository extends JpaRepository<AuditLog,String> {
     List<AuditLog> findByUserIdOrderByTimestampDesc(String userId);
 
     List<AuditLog> findByActionOrderByTimestampDesc(String action);

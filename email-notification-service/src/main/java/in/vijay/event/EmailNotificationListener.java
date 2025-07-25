@@ -1,8 +1,8 @@
 package in.vijay.event;
 
-import com.ms.event.user.UserCreatedEvent;
-import com.ms.event.user.UserDeletedEvent;
-import com.ms.event.user.UserUpdatedEvent;
+import in.vijay.event.user.UserCreatedEvent;
+import in.vijay.event.user.UserDeletedEvent;
+import in.vijay.event.user.UserUpdatedEvent;
 import in.vijay.util.EmailUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,7 @@
 package in.vijay.beans;
 
-import com.ms.dto.user.Role;
+import in.vijay.dto.user.Role;
+import in.vijay.model.BaseEntity;
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -11,11 +12,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseEntity<String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(nullable = false, unique = true)
     private String username;

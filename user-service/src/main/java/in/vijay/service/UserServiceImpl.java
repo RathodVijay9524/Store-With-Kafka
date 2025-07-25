@@ -1,11 +1,11 @@
 package in.vijay.service;
 
-import com.ms.dto.user.Role;
-import com.ms.dto.user.UserRequest;
-import com.ms.dto.user.UserResponse;
-import com.ms.event.user.UserCreatedEvent;
-import com.ms.event.user.UserDeletedEvent;
-import com.ms.event.user.UserUpdatedEvent;
+import in.vijay.dto.user.Role;
+import in.vijay.dto.user.UserRequest;
+import in.vijay.dto.user.UserResponse;
+import in.vijay.event.user.UserCreatedEvent;
+import in.vijay.event.user.UserDeletedEvent;
+import in.vijay.event.user.UserUpdatedEvent;
 import in.vijay.beans.User;
 import in.vijay.event.*;
 import in.vijay.repository.UserRepository;
@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final UserEventPublisher publisher;
+    private final IdGeneratorService idGeneratorService;
+
 
     /**
      * Creates a new user and publishes a UserCreatedEvent to Kafka.
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         BeanUtils.copyProperties(request, user);
         user.setRole(user.getRole() != null ? user.getRole() : Role.USER);
+        user.setId(idGeneratorService.generateId("USER","USR",6));
         user.setActive(true);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
@@ -58,7 +61,7 @@ public class UserServiceImpl implements UserService{
      * Updates an existing user and publishes a UserUpdatedEvent to Kafka.
      */
     @Override
-    public UserResponse updateUser(Long id, UserRequest request) {
+    public UserResponse updateUser(String id, UserRequest request) {
         log.info("🔧 Updating user with ID: {}", id);
 
         User user = userRepository.findById(id)
@@ -89,7 +92,7 @@ public class UserServiceImpl implements UserService{
      * Deletes a user and publishes a UserDeletedEvent to Kafka.
      */
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(String id) {
         log.info("🗑️ Deleting user with ID: {}", id);
 
         User user = userRepository.findById(id)
@@ -112,7 +115,7 @@ public class UserServiceImpl implements UserService{
      * Returns user details by ID.
      */
     @Override
-    public UserResponse getUserById(Long id) {
+    public UserResponse getUserById(String id) {
         log.info("🔍 Getting user by ID: {}", id);
 
         return userRepository.findById(id)
@@ -140,6 +143,7 @@ public class UserServiceImpl implements UserService{
      */
     private UserResponse mapToResponse(User user) {
         UserResponse response = new UserResponse();
+        response.setId(user.getId());
         BeanUtils.copyProperties(user, response);
         return response;
     }

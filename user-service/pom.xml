@@ -30,6 +30,7 @@
 		<java.version>24</java.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -41,12 +42,6 @@
 
 		<dependency>
 			<groupId>in.vijay</groupId>
-			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.ms</groupId>
 			<artifactId>common-id-generator</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
