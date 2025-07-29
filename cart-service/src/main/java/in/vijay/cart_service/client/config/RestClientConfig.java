@@ -26,4 +26,14 @@ public class RestClientConfig {
                 .build()
                 .createClient(ProductHttpClient.class);
     }
+
+    @Bean
+    public IdGeneratorClient idGeneratorClientHttpClient(RestClient.Builder builder) {
+        return HttpServiceProxyFactory
+                .builderFor(RestClientAdapter.create(
+                        builder.baseUrl("http://localhost:8096//api/ids").build()
+                ))
+                .build()
+                .createClient(IdGeneratorClient.class);
+    }
 }

@@ -15,11 +15,10 @@ import org.springframework.stereotype.Service;
 public class InventoryService {
 
     private final InventoryHttpClient inventoryHttpClient;
-    private final OrderEventPublisher orderEventPublisher;
 
-    public InventoryService(InventoryHttpClient inventoryHttpClient, OrderEventPublisher orderEventPublisher) {
+    public InventoryService(InventoryHttpClient inventoryHttpClient) {
         this.inventoryHttpClient = inventoryHttpClient;
-        this.orderEventPublisher = orderEventPublisher;
+
     }
 
     public void validateAndReserveItem(CartItemResponse item) {
@@ -31,18 +30,7 @@ public class InventoryService {
             throw new BadApiRequestException("Inventory not available for product: " + item.getProductId());
         }
 
-        inventoryHttpClient.reserveInventory(request);
-
-        // ✅ Publish reserved event (orderId can be updated from context)
-        orderEventPublisher.publishInventoryReservedEvent(
-                InventoryReservedEvent.builder()
-                        .productId(item.getProductId())
-                        .quantity(item.getQuantity())
-                        .orderId(null) // pass actual orderId if already available
-                        .build()
-        );
-
-        log.debug("✅ Inventory reserved for product: {}", item.getProductId());
+         log.debug("✅ Inventory available  for product: {}", item.getProductId());
     }
 
 }

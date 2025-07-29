@@ -10,6 +10,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class OrderCancelledEvent extends OrderEvent {
+    private String orderId;
     private String reason;
+    private String cancelledDate;
 }
 

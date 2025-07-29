@@ -11,11 +11,5 @@ public interface InventoryHttpClient {
 
     @PostExchange("/check")
     InventoryResponse checkInventory(@RequestBody InventoryRequest request);
-
-    @PostExchange("/reserve")
-    void reserveInventory(@RequestBody InventoryRequest request);
-
-    @PostExchange("/rollback")
-    void rollbackInventory(@RequestBody InventoryRequest request);
 }
 

@@ -1,6 +1,7 @@
 package in.vijay.cart_service.service;
 
 import in.vijay.cart_service.beans.CartItem;
+import in.vijay.cart_service.client.config.IdGeneratorClient;
 import in.vijay.cart_service.client.config.ProductHttpClient;
 import in.vijay.cart_service.repository.CartItemRepository;
 import in.vijay.dto.ApiResponse;
@@ -17,6 +18,7 @@ import static in.vijay.cart_service.PrefixGenerator.generateSequential;
 public class CartItemServiceImpl implements CartItemService{
     private final CartItemRepository cartItemRepository;
     private final ProductHttpClient productHttpClient;
+    private final IdGeneratorClient idGeneratorClient;
     @Override
     public CartItem createCartItem(String productId, int quantity) {
         // Fetch product from external service
@@ -39,7 +41,7 @@ public class CartItemServiceImpl implements CartItemService{
                 .quantity(quantity)
                 .build();
 
-        cartItem.setId(generateSequential("ITEM"));
+        cartItem.setId(idGeneratorClient.generateId("ITEMS", "ITM",6));
         return cartItemRepository.save(cartItem);
     }
 

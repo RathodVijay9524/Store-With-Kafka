@@ -36,18 +36,7 @@ public class OrderEventPublisher {
         kafkaTemplate.send("order.cancelled", event);
     }
 
-    public void publishOrderShippedEvent(Order order, String trackingId) {
-        OrderShippedEvent event = modelMapper.map(order, OrderShippedEvent.class);
-        event.setTrackingId(trackingId);
-        //event.setShippedAt(order.getUpdatedAt()); // Or LocalDateTime.now()
-        kafkaTemplate.send("order.shipped", event);
-    }
 
-    public void publishOrderCompletedEvent(Order order) {
-        OrderCompletedEvent event = modelMapper.map(order, OrderCompletedEvent.class);
-        //event.setCompletedAt(order.getUpdatedAt()); // Or LocalDateTime.now()
-        kafkaTemplate.send("order.completed", event);
-    }
 
     public void publishOrderItemShippedEvent(OrderItem orderItem) {
         OrderItemShippedEvent event = modelMapper.map(orderItem, OrderItemShippedEvent.class);
@@ -62,11 +51,5 @@ public class OrderEventPublisher {
         event.setReason(reason);
         kafkaTemplate.send("order.item.cancelled", event);
     }
-    public void publishInventoryReservedEvent(InventoryReservedEvent event) {
-        kafkaTemplate.send("inventory.reserved", event);
-    }
 
-    public void publishInventoryRollbackEvent(InventoryRollbackEvent event) {
-        kafkaTemplate.send("inventory.rollback", event);
-    }
 }

@@ -28,6 +28,9 @@ public class Order extends BaseEntity<String> {
     @Column(precision = 12, scale = 2)
     private BigDecimal totalAmount;
 
+    private String productId;
+    private Integer quantity;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items;
 

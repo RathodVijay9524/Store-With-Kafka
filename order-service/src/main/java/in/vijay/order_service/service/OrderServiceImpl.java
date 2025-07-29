@@ -8,10 +8,7 @@ import in.vijay.event.enventory.InventoryRollbackEvent;
 import in.vijay.exceptions.BadApiRequestException;
 import in.vijay.order_service.beans.Order;
 import in.vijay.order_service.beans.OrderItem;
-import in.vijay.order_service.client.service.CartHttpClient;
-import in.vijay.order_service.client.service.InventoryHttpClient;
-import in.vijay.order_service.client.service.ProductHttpClient;
-import in.vijay.order_service.client.service.UserHttpClient;
+import in.vijay.order_service.client.service.*;
 import in.vijay.order_service.event.OrderEventPublisher;
 import in.vijay.order_service.repository.OrderRepository;
 import in.vijay.order_service.exceptions.OrderProcessingException;
@@ -48,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
     private final InventoryService inventoryService;
     private final OrderValidator orderValidator;
+    private final IdGeneratorClient idGeneratorClient;
 
     @Override
     public OrderResponse placeOrderFromCart(OrderRequest request) {
@@ -104,14 +102,10 @@ public class OrderServiceImpl implements OrderService {
 
             // 9️⃣ Return Response
             log.info("✅ [Step 9] Order placement successful for user: {}", userId);
-            return modelMapper.map(finalOrder, OrderResponse.class);
+              return modelMapper.map(finalOrder, OrderResponse.class);
 
         } catch (Exception ex) {
             log.error("🔥 [Error] Order placement failed for user: {} - Reason: {}", userId, ex.getMessage());
-
-            // 🔁 Rollback Reserved Inventory
-            log.info("🔄 Rolling back reserved inventory");
-            rollbackReservedInventory(reservedItems);
 
             // 🧨 Cancel Incomplete Order
             log.info("🛑 Handling failure and canceling incomplete order if needed");
@@ -143,7 +137,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void handleFailure(List<CartItemResponse> reservedItems, Order savedOrder, Exception ex, String userId) {
-        rollbackReservedInventory(reservedItems);
 
         if (savedOrder != null) {
             savedOrder.setStatus(OrderStatus.FAILED);
@@ -154,22 +147,7 @@ public class OrderServiceImpl implements OrderService {
         log.error("🔥Order placement failed for user: {} - Reason: {}", userId, ex.getMessage());
     }
 
-    private void rollbackReservedInventory(List<CartItemResponse> reservedItems) {
-        for (CartItemResponse item : reservedItems) {
-            try {
-               // inventoryHttpClient.rollbackInventory(item); // assumes rollback logic in InventoryService
-                orderEventPublisher.publishInventoryRollbackEvent(
-                        InventoryRollbackEvent.builder()
-                                .productId(item.getProductId())
-                                .reason("Rolling back due to order failure")
-                                .build()
-                );
-                log.info("↩️ Rolled back inventory for product: {}", item.getProductId());
-            } catch (Exception rollbackEx) {
-                log.error("❗Failed to rollback inventory for product: {}", item.getProductId(), rollbackEx);
-            }
-        }
-    }
+
 
     public List<CartItemResponse> validateAndReserveInventory(List<CartItemResponse> items) {
         log.info("🔍 Validating products and reserving inventory....");
@@ -251,7 +229,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order createOrderSkeleton(String userId) {
-        String orderId = generateDateBased("ORD");
+        String orderId = idGeneratorClient.generateDateBasedId("ORDER","ORD");
         Order order = Order.builder()
                 .userId(userId)
                 .orderDate(LocalDateTime.now())
@@ -274,7 +252,12 @@ public class OrderServiceImpl implements OrderService {
 
             OrderItemResponse createdItem = orderItemService.addOrderItem(order.getId(), itemRequest);
             OrderItem entity = modelMapper.map(createdItem, OrderItem.class);
+            order.setQuantity(createdItem.getQuantity());
+            order.setProductId(createdItem.getProductId());
+            entity.setProductId(createdItem.getProductId());
+            entity.setQuantity(createdItem.getQuantity());
             entity.setOrder(order);
+
             return entity;
         }).collect(Collectors.toList());
     }

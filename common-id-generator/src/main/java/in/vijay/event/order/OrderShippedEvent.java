@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class OrderShippedEvent extends OrderEvent {
     private String trackingId;
-    private LocalDateTime shippedAt;
+    private String orderId;
+    private String shippingId;
+    private String shippedDate;
+    private String deliveryEstimate;
+    private String address;
 }
 

@@ -12,5 +12,10 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class OrderCompletedEvent extends OrderEvent {
     private LocalDateTime completedAt;
+    private String orderId;
+    private String shipmentId;
+    private String completedDate;
+    private String productId;
+
 }
 

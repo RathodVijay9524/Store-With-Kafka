@@ -7,6 +7,7 @@ import in.vijay.dto.product.ProductResponse;
 import in.vijay.exceptions.BadApiRequestException;
 import in.vijay.order_service.beans.Order;
 import in.vijay.order_service.beans.OrderItem;
+import in.vijay.order_service.client.service.IdGeneratorClient;
 import in.vijay.order_service.client.service.ProductHttpClient;
 import in.vijay.order_service.event.OrderEventPublisher;
 import in.vijay.order_service.repository.OrderItemRepository;
@@ -31,6 +32,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final ProductHttpClient productHttpClient;
     private final OrderEventPublisher orderEventPublisher;
     private final ModelMapper modelMapper;
+    private final IdGeneratorClient idGeneratorClient;
 
     @Override
     public OrderItemResponse addOrderItem(String orderId, OrderItemRequest request) {
@@ -66,7 +68,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .quantity(request.getQuantity())
                 .order(order)
                 .build();
-        item.setId(PrefixGenerator.generateSequential("ITEM"));
+        item.setId(idGeneratorClient.generateDateBasedId("ITEM","ITEM"));
         OrderItem savedItem = orderItemRepository.save(item);
         log.info("📝 Order item saved: {} (productId: {})", savedItem.getId(), savedItem.getProductId());
 

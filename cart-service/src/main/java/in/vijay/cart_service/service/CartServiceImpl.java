@@ -2,6 +2,7 @@ package in.vijay.cart_service.service;
 
 import in.vijay.cart_service.beans.Cart;
 import in.vijay.cart_service.beans.CartItem;
+import in.vijay.cart_service.client.config.IdGeneratorClient;
 import in.vijay.cart_service.client.config.UserHttpClient;
 import in.vijay.cart_service.event.CartEventPublisher;
 import in.vijay.cart_service.repository.CartRepository;
@@ -36,6 +37,7 @@ public class CartServiceImpl implements CartService{
     private final CartItemService cartItemService;
     private final UserHttpClient userHttpClient;
     private final CartEventPublisher cartEventPublisher;
+    private final IdGeneratorClient idGeneratorClient;
 
 
     @Override
@@ -67,7 +69,7 @@ public class CartServiceImpl implements CartService{
         // 3. Fetch or Create Cart
         Cart cart = cartRepository.findByUserId(user.getId()).orElseGet(() -> {
             Cart newCart = new Cart();
-            newCart.setId(generateSequential("CART"));
+            newCart.setId(idGeneratorClient.generateDateBasedId("CARTS", "CART"));
             newCart.setUserId(user.getId());
             newCart.setItems(new ArrayList<>());
             return newCart;

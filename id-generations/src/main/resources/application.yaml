@@ -1,0 +1,17 @@
+server:
+  port: 8096
+
+spring:
+  application:
+    name: IdService
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/users_db
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+

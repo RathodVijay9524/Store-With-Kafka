@@ -10,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -17,6 +18,8 @@ public class OrderCreatedEvent extends OrderEvent {
     private String userId;
     private BigDecimal totalAmount;
     private LocalDateTime orderDate;
+    private String productId;
+    private Integer quantity;
     private List<OrderItemEvent> items;
 }
 

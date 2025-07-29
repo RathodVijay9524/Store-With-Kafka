@@ -1,9 +1,6 @@
 package in.vijay.order_service.client.config;
 
-import in.vijay.order_service.client.service.CartHttpClient;
-import in.vijay.order_service.client.service.InventoryHttpClient;
-import in.vijay.order_service.client.service.ProductHttpClient;
-import in.vijay.order_service.client.service.UserHttpClient;
+import in.vijay.order_service.client.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
@@ -47,5 +44,14 @@ public class RestClientConfig {
                 ))
                 .build()
                 .createClient(InventoryHttpClient.class);
+    }
+    @Bean
+    public IdGeneratorClient idGeneratorClientHttpClient(RestClient.Builder builder) {
+        return HttpServiceProxyFactory
+                .builderFor(RestClientAdapter.create(
+                        builder.baseUrl("http://localhost:8096//api/ids").build()
+                ))
+                .build()
+                .createClient(IdGeneratorClient.class);
     }
 }
