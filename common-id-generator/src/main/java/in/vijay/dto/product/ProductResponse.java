@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

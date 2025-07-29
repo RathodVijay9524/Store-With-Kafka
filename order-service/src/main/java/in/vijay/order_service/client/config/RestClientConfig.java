@@ -34,7 +34,7 @@ public class RestClientConfig {
     public CartHttpClient cartHttpClient(RestClient.Builder builder) {
         return HttpServiceProxyFactory
                 .builderFor(RestClientAdapter.create(
-                        builder.baseUrl("http://localhost:8088/api/carts").build()
+                        builder.baseUrl("http://localhost:8086/api/carts").build()
                 ))
                 .build()
                 .createClient(CartHttpClient.class);

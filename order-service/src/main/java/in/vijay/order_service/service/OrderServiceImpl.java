@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             // 1️⃣ Validate Input & Idempotency
             log.info("🧾 [Step 1] Validating order request");
-            validateOrderRequest(request);
+            // validateOrderRequest(request);
 
             // 2️⃣ Validate User Existence
             log.info("🔎 [Step 2] Validating user existence for userId: {}", userId);
@@ -86,7 +86,9 @@ public class OrderServiceImpl implements OrderService {
             // 6️⃣ Map Items & Finalize Order
             log.info("🧩 [Step 6] Mapping cart items to order and calculating total");
             List<OrderItem> orderItems = createOrderItems(savedOrder, cart.getItems());
-            savedOrder.setItems(orderItems);
+            //savedOrder.setItems(orderItems);
+            savedOrder.getItems().clear();               // ✅ Clear existing
+            savedOrder.getItems().addAll(orderItems);    // ✅ Add new items in-place
             savedOrder.calculateTotalAmount();
             Order finalOrder = orderRepository.save(savedOrder);
             log.info("💰 Final order total: {} (orderId: {})", finalOrder.getTotalAmount(), finalOrder.getId());
@@ -185,7 +187,7 @@ public class OrderServiceImpl implements OrderService {
             orderValidator.validateCartItem(item, product);
 
             // Reserve inventory and publish event
-            inventoryService.validateAndReserveItem(item);
+           // inventoryService.validateAndReserveItem(item);
 
             reservedItems.add(item);
         }
