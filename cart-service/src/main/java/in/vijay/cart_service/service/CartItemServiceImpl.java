@@ -3,6 +3,7 @@ package in.vijay.cart_service.service;
 import in.vijay.cart_service.beans.CartItem;
 import in.vijay.cart_service.client.config.ProductHttpClient;
 import in.vijay.cart_service.repository.CartItemRepository;
+import in.vijay.dto.ApiResponse;
 import in.vijay.dto.product.ProductResponse;
 import in.vijay.service.IdGeneratorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,22 +19,30 @@ public class CartItemServiceImpl implements CartItemService{
     private final ProductHttpClient productHttpClient;
     @Override
     public CartItem createCartItem(String productId, int quantity) {
-        // Fetch product details from product-service via HTTP
-        ProductResponse product = productHttpClient.getProductById(productId);
+        // Fetch product from external service
+        ApiResponse<ProductResponse> response = productHttpClient.getProductById(productId);
+        ProductResponse product = response.getData(); // ✅ unwrap the actual product
+
         if (product == null) {
             throw new EntityNotFoundException("Product not found for ID: " + productId);
         }
-         // Build CartItem
+
+        if (product.getPrice() == null) {
+            throw new IllegalStateException("Product price is null for product ID: " + productId);
+        }
+
+        // ✅ Build CartItem
         CartItem cartItem = CartItem.builder()
                 .productId(product.getId())
                 .productName(product.getName())
-                .price(product.getPrice())
+                .price(product.getPrice()) // ✅ safe now
                 .quantity(quantity)
                 .build();
+
         cartItem.setId(generateSequential("ITEM"));
-        // Save and return
         return cartItemRepository.save(cartItem);
     }
+
 
     @Override
     public void removeCartItem(String cartItemId) {

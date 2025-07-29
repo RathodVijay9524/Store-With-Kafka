@@ -14,14 +14,17 @@ public class CartEventPublisher {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publishCartCreated(CartCreatedEvent event) {
+
         kafkaTemplate.send("cart-created-topic", event);
     }
 
     public void publishCartItemAdded(CartItemAddedEvent event) {
+
         kafkaTemplate.send("cart-item-added-topic", event);
     }
 
     public void publishCartCleared(CartClearedEvent event) {
+
         kafkaTemplate.send("cart-cleared-topic", event);
     }
 }

@@ -18,11 +18,12 @@ public class RestClientConfig {
 
     }
     @Bean
-    public ProductHttpClient productHttpClient(RestClient.Builder restClientBuilder){
+    public ProductHttpClient productHttpClient(RestClient.Builder builder) {
         return HttpServiceProxyFactory
-                .builderFor(RestClientAdapter.create(restClientBuilder.build()))
+                .builderFor(RestClientAdapter.create(
+                        builder.baseUrl("http://localhost:8087/api/products").build()
+                ))
                 .build()
                 .createClient(ProductHttpClient.class);
-
     }
 }
