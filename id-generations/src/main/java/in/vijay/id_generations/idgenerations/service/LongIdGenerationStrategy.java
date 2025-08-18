@@ -11,6 +11,7 @@ public class LongIdGenerationStrategy implements IdGenerationStrategy<Long> {
 
     @Override
     public Long generateId(String entityName) {
+
         return idGenerator.generateLongId(entityName);
     }
 

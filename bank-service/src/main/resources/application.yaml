@@ -1,0 +1,45 @@
+server:
+  port: 9095
+
+spring:
+  application:
+    name: AccountService
+
+  threads:
+    virtual:
+      enabled: true  # Enable virtual threads (Java 21+)
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/users_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 200   # Adjust based on DB & workload
+      minimum-idle: 20         # Keep some idle connections ready
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  transaction:
+    default-timeout: 30s  # 30 seconds transaction timeout
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: account-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
